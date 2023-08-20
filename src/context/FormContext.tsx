@@ -13,7 +13,7 @@ type Action = {
   payload: any;
 };
 
-type FormContext = {
+type Context = {
   state: State;
   dispatch: (action: Action) => void;
 };
@@ -30,7 +30,7 @@ const initialDate: State = {
   github: '',
 };
 
-const FormContext = createContext<FormContext | undefined>(undefined);
+const FormContext = createContext<Context | undefined>(undefined);
 
 export enum FormActions {
   setCurrentStep,
@@ -43,7 +43,7 @@ export enum FormActions {
 const formReducer = (state: State, action: Action) => {
   switch (action.type) {
     case FormActions.setCurrentStep:
-      return { ...state, current: action.payload };
+      return { ...state, currentStep: action.payload };
     case FormActions.setName:
       return { ...state, name: action.payload };
     case FormActions.setLevel:
@@ -71,4 +71,6 @@ export const useForm = () => {
   if (context === undefined) {
     throw new Error('useForm precisa ser usado dentro do FormProvider');
   }
+
+  return context
 };
